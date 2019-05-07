@@ -19,12 +19,6 @@ class DetailsScreen extends React.Component {
           <Container>
             <Header />
             <Content>
-            <View style={{flexDirection: 'row' }}>
-              {/* <Button style = {{width: 150}} ><Text> Complaints</Text></Button> */}
-              {/* <Button  style = {{width: 150}}><Text> History </Text></Button> */}
-              {/* <Button style = {{width: 150}}  ><Text> Report </Text></Button>       */}
-            </View>
-                         
               <Item regular>
               <Icon active name='home' />
                 <Input placeholder='Location'/>
