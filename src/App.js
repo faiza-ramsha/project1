@@ -6,6 +6,47 @@ import { Container, Header, Content, Icon,Body,Form,CheckBox,Textarea,ListItem, 
 
 
 
+class HomeScreen extends React.Component {
+  
+    static navigationOptions = {
+     title: 'Clean And Green Karachi',
+   };
+ 
+    render() {
+     return (
+         <Container>
+         <Content>
+           <Form>
+             <Item floatingLabel>
+               <Label>Username</Label>
+               <Input />
+             </Item>
+              <Item floatingLabel last>
+               <Label>Password</Label>
+               <Input />
+              </Item>
+              <View style={{ flex: 1, margin: 40}}>
+                <Button
+                title="Log In"
+                  onPress={() => {
+                  /* 1. Navigate to the Details route with params */
+                   this.props.navigation.navigate('Details', {
+                   itemId: 86,
+                   otherParam: 'anything you want here',
+                   });
+              }}
+              />
+      </View>
+           </Form>
+         </Content>
+       </Container>
+     );
+   }
+ }
+ 
+
+
+
 class DetailsScreen extends React.Component {
 
     static navigationOptions = {
@@ -58,56 +99,6 @@ class DetailsScreen extends React.Component {
       }
     }
     
-     
-class HomeScreen extends React.Component {
-  
-   static navigationOptions = {
-    title: 'Clean And Green Karachi',
-  };
-
-   render() {
-    return (
-        <Container>
-        <Content>
-          <Form>
-            <Item floatingLabel>
-              <Label>Username</Label>
-              <Input />
-            </Item>
-             <Item floatingLabel last>
-              <Label>Password</Label>
-              <Input />
-             </Item>
-             <View style={{ flex: 1, margin: 40}}>
-               <Button
-               title="Log In"
-                 onPress={() => {
-                 /* 1. Navigate to the Details route with params */
-                  this.props.navigation.navigate('Details', {
-                  itemId: 86,
-                  otherParam: 'anything you want here',
-                  });
-             }}
-             />
-     </View>
-          </Form>
-        </Content>
-      </Container>
-    );
-  }
-}
-
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
-}
-
-
 const MainStack = createStackNavigator(
   {
     Home: {
@@ -117,30 +108,9 @@ const MainStack = createStackNavigator(
       screen: DetailsScreen,
     },
   },
-  {
-    /* Same configuration as before */
-  }
 );
 
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Details: DetailsScreen,
-  },
-  {
-    initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    },
-  }
-);
+
 
  const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -150,10 +120,7 @@ const RootStack = createStackNavigator(
   initialRouteName: "Home"
   
 });
-const TabNavigator = createBottomTabNavigator({
-  Home: HomeScreen,
-  Settings: SettingsScreen,
-});
+
 
 
 const AppContainer = createAppContainer(AppNavigator);
