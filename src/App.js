@@ -1,51 +1,95 @@
 import React, { Component } from "react";
-import { View, Text , Button, Image } from "react-native";
+import { View, Text , Button, Image,TextInput,autoCorrect } from "react-native";
+import firebase from "firebase";
+import { Header } from "./components/common";
+import { CustomButton , Card, CardSection, Input} from "./components/common";
 import { createStackNavigator,  createAppContainer,  createBottomTabNavigator } from "react-navigation";
-import { Container, Header, Content, Icon,Body,Form,CheckBox,Textarea,ListItem, Item, Input, Label } from 'native-base';
-
+import Screen from "./components/common/Screen";
 
 
 
 class HomeScreen extends React.Component {
+ 
+  componentWillMount() {
+    firebase.initializeApp({
+    apiKey: "AIzaSyB9RiCp-sEdwqj0IhMPj70hazcBdwHA1lI",
+    authDomain: "projectauth1.firebaseapp.com",
+    databaseURL: "https://projectauth1.firebaseio.com",
+    projectId: "projectauth1",
+    storageBucket: "projectauth1.appspot.com",
+    messagingSenderId: "406723489661",
+    appId: "1:406723489661:web:7afe2186e33a78da"
+  });
+}
+ 
   
     static navigationOptions = {
      title: 'Clean And Green Karachi',
    };
- 
-    render() {
-     return (
-         <Container>
-         <Content>
-           <Form>
-             <Item floatingLabel>
-               <Label>Username</Label>
-               <Input />
-             </Item>
-              <Item floatingLabel last>
-               <Label>Password</Label>
-               <Input />
-              </Item>
-              <View style={{ flex: 1, margin: 40}}>
-                <Button
-                title="Log In"
+   state = { email: "", password: "",errorMessage:null };
+   handleLogin = () => {
+    const { email, pasword } = this.state
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => this.props.navigation.navigate('Main'))
+      .catch(error => this.setState({ errorMessage: error.message }))
+  }
+
+   render() {
+    return (
+          <View  >
+            <Image source={require('./components/common/2.jpg')}
+            style = {{marginLeft: 100,marginTop : 10,borderRadius :20}}/>
+            
+            <Card>
+{/* For User ID */}
+<CardSection>
+{/* When the text input is not treated as a custom component 
+<TextInput
+value={this.state.text}
+onChangeText={text => this.setState({ text: text })}
+style={{ height: 20, width: 100 }}
+/> */}
+<Input
+autoCorrect
+placeholder="user@email.com"
+label="Email: "
+value={this.state.email}
+onChangeText={email => this.setState({ email })}
+/>
+</CardSection>
+{/* For Password */}
+<CardSection>
+<Input
+secureTextEntry
+placeholder="password"
+label="Password"
+value={this.state.password}
+onChangeText={password => this.setState({ password })}
+/>
+</CardSection>
+{/* For the Login Button */}
+<CardSection>
+<CustomButton     
                   onPress={() => {
                   /* 1. Navigate to the Details route with params */
                    this.props.navigation.navigate('Details', {
                    itemId: 86,
                    otherParam: 'anything you want here',
                    });
-              }}
-              />
-      </View>
-           </Form>
-         </Content>
-       </Container>
-     );
-   }
- }
- 
-
-
+              }}/>
+  
+    
+              
+</CardSection>
+</Card>
+          </View>
+          
+        );
+      }
+    }
+       
 
 class DetailsScreen extends React.Component {
 
@@ -57,44 +101,7 @@ class DetailsScreen extends React.Component {
   
   
         return (
-          <Container>
-            <Header />
-            <Content>
-              <Item regular>
-              <Icon active name='home' />
-                <Input placeholder='Location'/>
-              </Item>
-    
-               <Form>
-                <Textarea rowSpan={5} bordered placeholder="Issues:" />
-              </Form>
-    
-               <Item rounded>
-                <Input placeholder='Are You Resident?'/>
-              </Item>
-    
-              <ListItem>
-                <CheckBox checked={false} />
-                <Body>
-                  <Text>Yes</Text>
-                </Body>
-              </ListItem> 
-              <ListItem>
-                <CheckBox checked={false} />
-                <Body>
-                  <Text>No</Text>
-                </Body>
-              </ListItem>
-    
-                <Item>
-                <Input placeholder="Context:" />
-              </Item>
-    
-               <Item>
-                <Input placeholder="Attachments:" />
-              </Item>
-            </Content>
-          </Container>
+          <Screen/>
         );
       }
     }
@@ -111,7 +118,6 @@ const MainStack = createStackNavigator(
 );
 
 
-
  const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Details: DetailsScreen
@@ -120,6 +126,7 @@ const MainStack = createStackNavigator(
   initialRouteName: "Home"
   
 });
+
 
 
 
