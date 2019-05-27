@@ -5,8 +5,10 @@ const { buttonStyle, textStyle } = styles;
 return (
 // <TouchableOpacity onPress={() => console.log('pressed')} style={buttonStyle}>
 <TouchableOpacity onPress={onPress} style={buttonStyle}>
-<Text style={textStyle}>{children}Sign in </Text>
+<Text style={textStyle}>{children}login</Text>
 </TouchableOpacity>
+
+
 );
 };
 const styles = {
